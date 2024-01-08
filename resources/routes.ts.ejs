@@ -1,0 +1,30 @@
+<% const handledEntities = Object.values(entityMap).filter(utils.isPresentableEntity).filter((e) => e.api.methods); -%>
+<% if (handledEntities.length > 0) { -%>
+import { Router } from 'express';
+import { execute } from 'airent-api-express';
+  <%_ handledEntities.forEach((entity) => { -%>
+import * as <%= entity.api.strings.handlersClass %> from '@/entities/generated/<%= utils.toKababCase(entity.name) %>-handlers<%= utils.getModuleSuffix(config) %>';
+  <%_ }); -%>
+
+const router = Router();
+  <%_ handledEntities.forEach((entity) => { -%>
+
+    <%_ if (entity.api.booleans.hasGetMany) { -%>
+router.post('/<%= utils.toKababCase(utils.pluralize(entity.name)) %>/get-many', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.getManyHandler %>));
+    <%_ } -%>
+    <%_ if (entity.api.booleans.hasGetOne) { -%>
+router.post('/<%= utils.toKababCase(utils.pluralize(entity.name)) %>/get-one', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.getOneHandler %>));
+    <%_ } -%>
+    <%_ if (entity.api.booleans.hasCreateOne) { -%>
+router.post('/<%= utils.toKababCase(utils.pluralize(entity.name)) %>/create-one', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.createOneHandler %>));
+    <%_ } -%>
+    <%_ if (entity.api.booleans.hasUpdateOne) { -%>
+router.post('/<%= utils.toKababCase(utils.pluralize(entity.name)) %>/update-one', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.updateOneHandler %>));
+    <%_ } -%>
+    <%_ if (entity.api.booleans.hasDeleteOne) { -%>
+router.post('/<%= utils.toKababCase(utils.pluralize(entity.name)) %>/delete-one', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.deleteOneHandler %>));
+    <%_ } -%>
+  <%_ }); -%>
+
+export default router;
+<% } -%>

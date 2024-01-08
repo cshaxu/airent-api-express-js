@@ -1,0 +1,45 @@
+{
+  "name": "airent-api-express",
+  "version": "0.1.4",
+  "description": "Airent Api Extension for Express",
+  "main": "./lib/index.js",
+  "bin": {
+    "airent-api": "./bin/index.js"
+  },
+  "scripts": {
+    "build": "rm -rf ./lib && tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cshaxu/airent-api-express-js.git"
+  },
+  "keywords": [
+    "api",
+    "backend",
+    "data",
+    "entity",
+    "framework",
+    "orm",
+    "pojo",
+    "presentation"
+  ],
+  "author": "cshaxu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cshaxu/airent-api-express-js/issues"
+  },
+  "homepage": "https://github.com/cshaxu/airent-api-express-js#readme",
+  "files": [
+    "bin",
+    "lib",
+    "resources"
+  ],
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.1",
+    "typescript": "^5.3.2"
+  }
+}
