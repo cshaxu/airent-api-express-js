@@ -4,7 +4,7 @@
   "description": "Airent Api Extension for Express",
   "main": "./lib/index.js",
   "bin": {
-    "airent-api": "./bin/index.js"
+    "airent-api-express": "./bin/index.js"
   },
   "scripts": {
     "build": "rm -rf ./lib && tsc -p tsconfig.json"

@@ -10,19 +10,19 @@ const router = Router();
   <%_ handledEntities.forEach((entity) => { -%>
 
     <%_ if (entity.api.booleans.hasGetMany) { -%>
-router.post('/<%= utils.toKababCase(utils.pluralize(entity.name)) %>/get-many', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.getManyHandler %>));
+router.post('/get-many-<%= utils.toKababCase(utils.pluralize(entity.name)) %>', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.getManyHandler %>));
     <%_ } -%>
     <%_ if (entity.api.booleans.hasGetOne) { -%>
-router.post('/<%= utils.toKababCase(utils.pluralize(entity.name)) %>/get-one', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.getOneHandler %>));
+router.post('/get-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.getOneHandler %>));
     <%_ } -%>
     <%_ if (entity.api.booleans.hasCreateOne) { -%>
-router.post('/<%= utils.toKababCase(utils.pluralize(entity.name)) %>/create-one', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.createOneHandler %>));
+router.post('/create-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.createOneHandler %>));
     <%_ } -%>
     <%_ if (entity.api.booleans.hasUpdateOne) { -%>
-router.post('/<%= utils.toKababCase(utils.pluralize(entity.name)) %>/update-one', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.updateOneHandler %>));
+router.post('/update-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.updateOneHandler %>));
     <%_ } -%>
     <%_ if (entity.api.booleans.hasDeleteOne) { -%>
-router.post('/<%= utils.toKababCase(utils.pluralize(entity.name)) %>/delete-one', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.deleteOneHandler %>));
+router.post('/delete-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.deleteOneHandler %>));
     <%_ } -%>
   <%_ }); -%>
 

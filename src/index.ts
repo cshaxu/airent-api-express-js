@@ -11,22 +11,19 @@ function execute(apiHandler: (request: Request) => Promise<Response>) {
     res: ExpressResponse,
     _next: ExpressNextFunction
   ) => {
-    const request = buildRequest(req);
+    const request = buildPostRequest(req);
     const response = await apiHandler(request);
     const json = await response.json();
     res.status(response.status).json(json).end();
   };
 }
 
-function buildRequest(expressRequest: ExpressRequest): Request {
-  const url = new URL(
-    expressRequest.originalUrl,
-    `${expressRequest.protocol}://${expressRequest.hostname}`
-  );
+function buildPostRequest(req: ExpressRequest): Request {
+  const url = new URL(req.originalUrl, `${req.protocol}://${req.hostname}`);
   const init: RequestInit = {
-    method: expressRequest.method,
-    headers: buildHeaders(expressRequest.headers),
-    body: JSON.stringify(expressRequest.body), // this needs to be transformed depending on the body type
+    method: "POST",
+    headers: buildHeaders(req.headers),
+    body: JSON.stringify(req.body), // this needs to be transformed depending on the body type
     mode: "cors" as RequestMode, // or other relevant mode
     credentials: "include" as RequestCredentials, // or 'omit', based on requirements
   };

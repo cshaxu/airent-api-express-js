@@ -60,7 +60,7 @@ async function configure() {
     "Api Express",
     isApiExpressEnabled
   );
-  if (!shouldEnableApiExpress && !isApiExpressEnabled) {
+  if (!shouldEnableApiExpress) {
     return;
   }
 
