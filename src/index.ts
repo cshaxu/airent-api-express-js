@@ -27,8 +27,9 @@ function buildPostRequest(req: ExpressRequest): Request {
     mode: "cors" as RequestMode, // or other relevant mode
     credentials: "include" as RequestCredentials, // or 'omit', based on requirements
   };
-
-  return new Request(url, init);
+  const request = new Request(url, init);
+  (request as any)["express"] = req;
+  return request;
 }
 
 function buildHeaders(expressHeaders: IncomingHttpHeaders): Headers {
