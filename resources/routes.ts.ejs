@@ -1,7 +1,7 @@
 <% const handledEntities = Object.values(entityMap).filter(utils.isPresentableEntity).filter((e) => e.api.methods); -%>
 <% if (handledEntities.length > 0) { -%>
 import { Router } from 'express';
-import { execute } from 'airent-api-express';
+import { execute } from '@airent/api-express';
   <%_ handledEntities.forEach((entity) => { -%>
 import * as <%= entity.api.strings.handlersClass %> from '@/entities/generated/<%= utils.toKababCase(entity.name) %>-handlers<%= utils.getModuleSuffix(config) %>';
   <%_ }); -%>

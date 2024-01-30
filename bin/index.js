@@ -39,7 +39,7 @@ const PROJECT_PATH = process.cwd();
 const CONFIG_FILE_PATH = path.join(PROJECT_PATH, "airent.config.json");
 
 const AIRENT_API_EXPRESS_RESOURCES_PATH =
-  "node_modules/airent-api-express/resources";
+  "node_modules/@airent/api-express/resources";
 const API_EXPRESS_SERVER_ROUTES_TEMPLATE_PATH = `${AIRENT_API_EXPRESS_RESOURCES_PATH}/routes.ts.ejs`;
 
 async function loadConfig() {
