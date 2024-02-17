@@ -3,26 +3,26 @@
 import { Router } from 'express';
 import { execute } from '@airent/api-express';
   <%_ handledEntities.forEach((entity) => { -%>
-import * as <%= entity.api.strings.handlersClass %> from '@/entities/generated/<%= utils.toKababCase(entity.name) %>-handlers<%= utils.getModuleSuffix(config) %>';
+import <%= entity.api.strings.handlersClass %> from '<%= config.expressHandlersPath %>/<%= utils.toKababCase(entity.name) %>-handlers<%= utils.getModuleSuffix(config) %>';
   <%_ }); -%>
 
 const router = Router();
   <%_ handledEntities.forEach((entity) => { -%>
 
     <%_ if (entity.api.booleans.hasGetMany) { -%>
-router.post('/get-many-<%= utils.toKababCase(utils.pluralize(entity.name)) %>', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.getManyHandler %>));
+router.post('/get-many-<%= utils.toKababCase(utils.pluralize(entity.name)) %>', execute(<%= entity.api.strings.handlersClass %>.getMany));
     <%_ } -%>
     <%_ if (entity.api.booleans.hasGetOne) { -%>
-router.post('/get-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.getOneHandler %>));
+router.post('/get-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.getOne));
     <%_ } -%>
     <%_ if (entity.api.booleans.hasCreateOne) { -%>
-router.post('/create-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.createOneHandler %>));
+router.post('/create-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.createOne));
     <%_ } -%>
     <%_ if (entity.api.booleans.hasUpdateOne) { -%>
-router.post('/update-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.updateOneHandler %>));
+router.post('/update-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.updateOne));
     <%_ } -%>
     <%_ if (entity.api.booleans.hasDeleteOne) { -%>
-router.post('/delete-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.<%= entity.api.strings.deleteOneHandler %>));
+router.post('/delete-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.deleteOne));
     <%_ } -%>
   <%_ }); -%>
 

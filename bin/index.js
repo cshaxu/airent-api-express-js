@@ -73,6 +73,10 @@ async function configure() {
     outputPath,
     skippable: false,
   });
+  config.expressHandlersPath = path.relative(
+    path.join(outputPath),
+    path.join(PROJECT_PATH, config.entityPath, "/generated")
+  );
 
   const content = JSON.stringify(config, null, 2) + "\n";
   await fs.promises.writeFile(CONFIG_FILE_PATH, content);
