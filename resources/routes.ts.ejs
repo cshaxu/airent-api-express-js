@@ -15,6 +15,9 @@ router.post('/get-many-<%= utils.toKababCase(utils.pluralize(entity.name)) %>', 
     <%_ if (entity.api.booleans.hasGetOne) { -%>
 router.post('/get-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.getOne));
     <%_ } -%>
+    <%_ if (entity.api.booleans.hasGetOneSafe) { -%>
+router.post('/get-one-<%= utils.toKababCase(entity.name) %>-safe', execute(<%= entity.api.strings.handlersClass %>.getOneSafe));
+    <%_ } -%>
     <%_ if (entity.api.booleans.hasCreateOne) { -%>
 router.post('/create-one-<%= utils.toKababCase(entity.name) %>', execute(<%= entity.api.strings.handlersClass %>.createOne));
     <%_ } -%>
