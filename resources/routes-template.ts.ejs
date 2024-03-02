@@ -3,7 +3,7 @@
 import { Router } from 'express';
 import { execute } from '@airent/api-express';
   <%_ handledEntities.forEach((entity) => { -%>
-import <%= entity.api.strings.handlersClass %> from '<%= config.expressHandlersPath %>/<%= utils.toKababCase(entity.name) %>-handlers<%= utils.getModuleSuffix(config) %>';
+import <%= entity.api.strings.handlersClass %> from '<%- entity.api.strings.airentApiHandlerPackage %>';
   <%_ }); -%>
 
 const router = Router();

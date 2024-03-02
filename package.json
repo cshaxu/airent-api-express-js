@@ -1,7 +1,7 @@
 {
   "name": "@airent/api-express",
-  "version": "0.1.7",
-  "description": "Express.js Extension for Airent API 0.1.7",
+  "version": "0.1.8",
+  "description": "Express.js Extension for Airent API 0.1.8",
   "main": "./lib/index.js",
   "bin": {
     "airent-api-express": "./bin/index.js"
