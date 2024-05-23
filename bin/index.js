@@ -78,12 +78,9 @@ async function configure() {
   if (apiExperessServerRoutesTemplate === undefined) {
     templates.push({
       name: API_EXPRESS_SERVER_ROUTES_TEMPLATE_PATH,
-      outputPath: config.apiExpress.routesFilePath,
+      outputPath: "{apiExpress.routesFilePath}",
       skippable: false,
     });
-  } else {
-    apiExperessServerRoutesTemplate.outputPath =
-      config.apiExpress.routesFilePath;
   }
 
   const content = JSON.stringify(config, null, 2) + "\n";
