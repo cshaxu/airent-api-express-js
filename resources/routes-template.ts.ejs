@@ -1,7 +1,12 @@
 <% const handledEntities = Object.values(entityMap).filter(utils.isPresentableEntity).filter((e) => e.api.methods); -%>
 <% if (handledEntities.length > 0) { -%>
+// library imports
 import { Router } from 'express';
+
+// airent imports
 import { execute } from '@airent/api-express';
+
+// entity imports
   <%_ handledEntities.forEach((entity) => { -%>
 import <%= entity.api.strings.handlersClass %> from '<%- entity.api.strings.airentApiHandlerPackage %>';
   <%_ }); -%>
