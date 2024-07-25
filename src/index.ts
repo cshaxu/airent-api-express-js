@@ -1,47 +1,66 @@
 import {
+  Awaitable,
+  Dispatcher,
+  DispatcherContext,
+  ErrorHandler,
+} from "@airent/api";
+import {
   NextFunction as ExpressNextFunction,
   Request as ExpressRequest,
+  RequestHandler as ExpressRequestHandler,
   Response as ExpressResponse,
 } from "express";
-import { IncomingHttpHeaders } from "http";
 
-function execute(apiHandler: (request: Request) => Promise<Response>) {
+type Authenticator<CONTEXT> = (request: ExpressRequest) => Awaitable<CONTEXT>;
+
+type RequestParser<DATA> = (request: ExpressRequest) => Awaitable<DATA>;
+
+type HandlerConfig<CONTEXT, DATA, PARSED, RESULT, ERROR> = {
+  authenticator: Authenticator<CONTEXT>;
+  requestParser: RequestParser<DATA>;
+  errorHandler?: ErrorHandler<CONTEXT, DATA, PARSED, RESULT, ERROR>;
+};
+
+const bodyRequestParser = <DATA>(request: ExpressRequest) =>
+  request.body as DATA;
+
+function handleWith<CONTEXT, DATA, PARSED, RESULT, ERROR>(
+  dispatcher: Dispatcher<CONTEXT, DATA, RESULT, ERROR>,
+  config: HandlerConfig<CONTEXT, DATA, PARSED, RESULT, ERROR>
+): ExpressRequestHandler {
+  const { authenticator, requestParser } = config;
+  const errorHandler =
+    config.errorHandler ??
+    ((error) => {
+      throw error;
+    });
+
   return async (
     req: ExpressRequest,
     res: ExpressResponse,
     _next: ExpressNextFunction
   ) => {
-    const request = buildPostRequest(req);
-    const response = await apiHandler(request);
-    const json = await response.json();
-    res.status(response.status).json(json).end();
-  };
-}
-
-function buildPostRequest(req: ExpressRequest): Request {
-  const url = new URL(req.originalUrl, `${req.protocol}://${req.hostname}`);
-  const init: RequestInit = {
-    method: "POST",
-    headers: buildHeaders(req.headers),
-    body: JSON.stringify(req.body), // this needs to be transformed depending on the body type
-    mode: "cors" as RequestMode, // or other relevant mode
-    credentials: "include" as RequestCredentials, // or 'omit', based on requirements
-  };
-  const request = new Request(url, init);
-  (request as any)["express"] = req;
-  return request;
-}
-
-function buildHeaders(expressHeaders: IncomingHttpHeaders): Headers {
-  let fetchHeaders = new Headers();
-  Object.entries(expressHeaders).forEach(([key, value]) => {
-    if (Array.isArray(value)) {
-      value.forEach((v) => fetchHeaders.append(key, v));
-    } else if (typeof value === "string") {
-      fetchHeaders.append(key, value);
+    const dispatcherContext: DispatcherContext<CONTEXT, DATA, PARSED, RESULT> =
+      {};
+    try {
+      dispatcherContext.context = await authenticator(req);
+      dispatcherContext.data = await requestParser(req);
+      const commonResponse = await dispatcher(
+        dispatcherContext.data,
+        dispatcherContext.context
+      );
+      res.status(commonResponse.code).json(commonResponse.result).end();
+    } catch (error) {
+      const commonResponse = await errorHandler(error, dispatcherContext);
+      res.status(commonResponse.code).json(commonResponse.result).end();
     }
-  });
-  return fetchHeaders;
+  };
 }
 
-export { execute };
+export {
+  Authenticator,
+  bodyRequestParser,
+  HandlerConfig,
+  handleWith,
+  RequestParser,
+};

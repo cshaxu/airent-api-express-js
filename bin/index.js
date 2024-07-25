@@ -23,6 +23,7 @@ async function getShouldEnable(name) {
 
 /** @typedef {Object} ApiExpressConfig
  *  @property {?string} libImportPath
+ *  @property {string} handlerConfigImportPath
  */
 
 /** @typedef {Object} Config
@@ -41,7 +42,22 @@ const CONFIG_FILE_PATH = path.join(PROJECT_PATH, "airent.config.json");
 const AIRENT_API_EXPRESS_RESOURCES_PATH =
   "node_modules/@airent/api-express/resources";
 const API_EXPRESS_AUGMENTOR_PATH = `${AIRENT_API_EXPRESS_RESOURCES_PATH}/augmentor.js`;
-const API_EXPRESS_SERVER_ROUTES_TEMPLATE_PATH = `${AIRENT_API_EXPRESS_RESOURCES_PATH}/routes-template.ts.ejs`;
+
+const API_EXPRESS_ROUTES_TEMPLATE_CONFIG = {
+  name: `${AIRENT_API_EXPRESS_RESOURCES_PATH}/routes-template.ts.ejs`,
+  outputPath: `{apiExpress.routesFilePath}`,
+  skippable: false,
+};
+const API_EXPRESS_HANDLER_TEMPLATE_CONFIG = {
+  name: `${AIRENT_API_EXPRESS_RESOURCES_PATH}/handler-template.ts.ejs`,
+  outputPath: `{entityPath}/generated/{kababEntityName}-handler.ts`,
+  skippable: false,
+};
+
+const API_EXPRESS_TEMPLATE_CONFIGS = [
+  API_EXPRESS_ROUTES_TEMPLATE_CONFIG,
+  API_EXPRESS_HANDLER_TEMPLATE_CONFIG,
+];
 
 async function loadConfig() {
   const configContent = await fs.promises.readFile(CONFIG_FILE_PATH, "utf8");
@@ -51,16 +67,19 @@ async function loadConfig() {
   return { ...config, augmentors, templates };
 }
 
+function addTemplate(config, draftTemplate) {
+  const { templates } = config;
+  const template = templates.find((t) => t.name === draftTemplate.name);
+  if (template === undefined) {
+    templates.push(draftTemplate);
+  }
+}
+
 async function configure() {
   const config = await loadConfig();
-  const { augmentors, templates } = config;
+  const { augmentors } = config;
   const isAugmentorEnabled = augmentors.includes(API_EXPRESS_AUGMENTOR_PATH);
-  const apiExperessServerRoutesTemplate = templates.find(
-    (t) => t.name === API_EXPRESS_SERVER_ROUTES_TEMPLATE_PATH
-  );
-  const isApiExpressEnabled =
-    isAugmentorEnabled || apiExperessServerRoutesTemplate !== undefined;
-  const shouldEnableApiExpress = isApiExpressEnabled
+  const shouldEnableApiExpress = isAugmentorEnabled
     ? true
     : await getShouldEnable("Api Express");
   if (!shouldEnableApiExpress) {
@@ -69,19 +88,19 @@ async function configure() {
   if (!isAugmentorEnabled) {
     augmentors.push(API_EXPRESS_AUGMENTOR_PATH);
   }
+  API_EXPRESS_TEMPLATE_CONFIGS.forEach((t) => addTemplate(config, t));
 
   config.apiExpress = config.apiExpress ?? {};
+
   config.apiExpress.routesFilePath = await askQuestion(
     "Express Api Routes Output File Path",
-    config.apiExpress.routeFilePath ?? "./src/airent-routes.ts"
+    config.apiExpress.routesFilePath ?? "./src/routes.ts"
   );
-  if (apiExperessServerRoutesTemplate === undefined) {
-    templates.push({
-      name: API_EXPRESS_SERVER_ROUTES_TEMPLATE_PATH,
-      outputPath: "{apiExpress.routesFilePath}",
-      skippable: false,
-    });
-  }
+
+  config.apiExpress.handlerConfigImportPath = await askQuestion(
+    'Import path for "handlerConfig"',
+    config.apiExpress.handlerConfigImportPath ?? "./src/framework"
+  );
 
   const content = JSON.stringify(config, null, 2) + "\n";
   await fs.promises.writeFile(CONFIG_FILE_PATH, content);
@@ -95,7 +114,6 @@ async function main() {
         '[AIRENT-API-EXPRESS/ERROR] "airent.config.json" not found'
       );
     }
-
     await configure();
   } finally {
     rl.close();

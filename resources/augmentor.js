@@ -20,17 +20,33 @@ function buildRelativePackage(sourcePath, targetPath, config) /* string */ {
   return `${relativePath}${suffix}`;
 }
 
+function augmentConfig(config) {
+  config.apiExpress.baseLibPackage = config.apiExpress.libImportPath
+    ? buildRelativePackage(
+        path.join(config.entityPath, "generated"),
+        config.apiExpress.libImportPath,
+        config
+      )
+    : "@airent/api-express";
+  config.apiExpress.handlerConfigPackage = buildRelativePackage(
+    joinRelativePath(config.entityPath, "generated"),
+    config.apiExpress.handlerConfigImportPath,
+    config
+  );
+}
+
 function augmentOne(entity, config, utils) {
   if (!entity.api) {
     return;
   }
 
-  entity.api.strings.airentApiHandlerPackage = buildRelativePackage(
+  entity.apiExpress = entity.apiExpress ?? {};
+  entity.apiExpress.routesHandlerPackage = buildRelativePackage(
     path.dirname(config.apiExpress.routesFilePath),
     joinRelativePath(
       config.entityPath,
       "generated",
-      `${utils.toKababCase(entity.name)}-handlers`
+      `${utils.toKababCase(entity.name)}-handler`
     ),
     config
   );
@@ -38,6 +54,7 @@ function augmentOne(entity, config, utils) {
 
 function augment(data) {
   const { entityMap, config, utils } = data;
+  augmentConfig(config);
   Object.values(entityMap).forEach((entity) =>
     augmentOne(entity, config, utils)
   );
