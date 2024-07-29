@@ -21,7 +21,7 @@ type HandlerConfig<CONTEXT, DATA, PARSED, RESULT, ERROR> = {
   errorHandler?: ErrorHandler<CONTEXT, DATA, PARSED, RESULT, ERROR>;
 };
 
-const bodyRequestParser = <DATA>(request: ExpressRequest) =>
+const bodyRequestParser = <DATA extends object>(request: ExpressRequest) =>
   request.body as DATA;
 
 function handleWith<CONTEXT, DATA, PARSED, RESULT, ERROR>(

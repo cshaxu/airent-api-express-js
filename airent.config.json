@@ -1,0 +1,67 @@
+{
+  "type": "module",
+  "schemaPath": "test-schemas",
+  "entityPath": "test-output/entities",
+  "contextImportPath": "./test-sources/context",
+  "augmentors": [
+    "node_modules/@airent/api/resources/augmentor.js",
+    "resources/augmentor.js"
+  ],
+  "templates": [
+    {
+      "name": "node_modules/@airent/api/resources/dispatcher-template.ts.ejs",
+      "outputPath": "{entityPath}/generated/{kababEntityName}-dispatcher.ts",
+      "skippable": false
+    },
+    {
+      "name": "node_modules/@airent/api/resources/actions-template.ts.ejs",
+      "outputPath": "{entityPath}/generated/{kababEntityName}-actions.ts",
+      "skippable": false
+    },
+    {
+      "name": "node_modules/@airent/api/resources/service-interface-template.ts.ejs",
+      "outputPath": "{entityPath}/generated/{kababEntityName}-service-interface.ts",
+      "skippable": false
+    },
+    {
+      "name": "node_modules/@airent/api/resources/service-template.ts.ejs",
+      "outputPath": "{api.server.servicePath}/{kababEntityName}.ts",
+      "skippable": true
+    },
+    {
+      "name": "node_modules/@airent/api/resources/client-template.ts.ejs",
+      "outputPath": "{api.client.clientPath}/{kababEntityName}.ts",
+      "skippable": false
+    },
+    {
+      "name": "node_modules/@airent/api/resources/search-service-template.ts.ejs",
+      "outputPath": "{api.server.servicePath}/{kababEntityName}-search.ts",
+      "skippable": true
+    },
+    {
+      "name": "resources/handler-template.ts.ejs",
+      "outputPath": "{entityPath}/generated/{kababEntityName}-handler.ts",
+      "skippable": false
+    },
+    {
+      "name": "resources/routes-template.ts.ejs",
+      "outputPath": "{apiExpress.routesFilePath}",
+      "skippable": false
+    }
+  ],
+  "api": {
+    "server": {
+      "servicePath": "test-output/services",
+      "dispatcherConfigImportPath": "./test-sources/framework"
+    },
+    "client": {
+      "clientPath": "test-output/clients",
+      "baseUrlImport": "import { baseUrl } from '../../test-sources/config';"
+    }
+  },
+  "apiExpress": {
+    "libImportPath": "./src/index",
+    "handlerConfigImportPath": "./test-sources/framework",
+    "routesFilePath": "test-output/routes.ts"
+  }
+}

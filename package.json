@@ -7,7 +7,8 @@
     "airent-api-express": "./bin/index.js"
   },
   "scripts": {
-    "build": "rm -rf ./lib && tsc -p tsconfig.json"
+    "build": "rm -rf ./lib && tsc -p tsconfig.json",
+    "test": "rm -rf ./test-output && airent"
   },
   "repository": {
     "type": "git",
@@ -18,10 +19,8 @@
     "backend",
     "data",
     "entity",
-    "framework",
-    "orm",
-    "pojo",
-    "presentation"
+    "express",
+    "framework"
   ],
   "author": "cshaxu",
   "license": "MIT",
@@ -35,11 +34,10 @@
     "resources"
   ],
   "dependencies": {
-    "@airent/api": "github:cshaxu/airent-api-js#123156605dd23d12fc55468f57f5c4badfaf0cc5",
+    "@airent/api": "github:cshaxu/airent-api-js#7e343cda7dcd06aa3ead33fe4df707c371378252",
     "express": "^4.19.2"
   },
   "devDependencies": {
-    "@types/async-lock": "^1.4.2",
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.12",
     "typescript": "^5.4.5"

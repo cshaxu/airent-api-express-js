@@ -24,6 +24,7 @@ async function getShouldEnable(name) {
 /** @typedef {Object} ApiExpressConfig
  *  @property {?string} libImportPath
  *  @property {string} handlerConfigImportPath
+ *  @property {string} routesFilePath
  */
 
 /** @typedef {Object} Config
