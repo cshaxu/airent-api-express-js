@@ -35,10 +35,11 @@
     "resources"
   ],
   "dependencies": {
-    "@airent/api": "github:cshaxu/airent-api-js#0b2774ebeb3b7e4085519d66ec616618f69ce26a",
+    "@airent/api": "github:cshaxu/airent-api-js#123156605dd23d12fc55468f57f5c4badfaf0cc5",
     "express": "^4.19.2"
   },
   "devDependencies": {
+    "@types/async-lock": "^1.4.2",
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.12",
     "typescript": "^5.4.5"

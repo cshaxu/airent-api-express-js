@@ -16,52 +16,31 @@ import <%= entity.api.strings.dispatcherClass %> from './<%= getDispatcherPackag
 const handlerConfig = { ...handlerConfigRaw, requestParser: bodyRequestParser };
   <%_ if (entity.api.booleans.hasSearch) { -%>
 
-const search = handleWith(
-  <%= entity.api.strings.dispatcherClass %>.search,
-  handlerConfig
-);
+const search = handleWith(<%= entity.api.strings.dispatcherClass %>.search, handlerConfig);
   <%_ } -%>
   <%_ if (entity.api.booleans.hasGetMany) { -%>
 
-const getMany = handleWith(
-  <%= entity.api.strings.dispatcherClass %>.getMany, 
-  handlerConfig
-);
+const getMany = handleWith(<%= entity.api.strings.dispatcherClass %>.getMany, handlerConfig);
   <%_ } -%>
   <%_ if (entity.api.booleans.hasGetOne) { -%>
 
-const getOne = handleWith(
-  <%= entity.api.strings.dispatcherClass %>.getOne,
-  handlerConfig,
-);
+const getOne = handleWith(<%= entity.api.strings.dispatcherClass %>.getOne, handlerConfig);
   <%_ } -%>
   <%_ if (entity.api.booleans.hasGetOneSafe) { -%>
 
-const getOneSafe = handleWith(
-  <%= entity.api.strings.dispatcherClass %>.getOneSafe,
-  handlerConfig,
-);
+const getOneSafe = handleWith(<%= entity.api.strings.dispatcherClass %>.getOneSafe, handlerConfig);
   <%_ } -%>
   <%_ if (entity.api.booleans.hasCreateOne) { -%>
 
-const createOne = handleWith(
-  <%= entity.api.strings.dispatcherClass %>.createOne,
-  handlerConfig,
-);
+const createOne = handleWith(<%= entity.api.strings.dispatcherClass %>.createOne, handlerConfig);
   <%_ } -%>
   <%_ if (entity.api.booleans.hasUpdateOne) { -%>
 
-const updateOne = handleWith(
-  <%= entity.api.strings.dispatcherClass %>.updateOne,
-  handlerConfig,
-);
+const updateOne = handleWith(<%= entity.api.strings.dispatcherClass %>.updateOne, handlerConfig);
   <%_ } -%>
   <%_ if (entity.api.booleans.hasDeleteOne) { -%>
 
-const deleteOne = handleWith(
-  <%= entity.api.strings.dispatcherClass %>.deleteOne,
-  handlerConfig,
-);
+const deleteOne = handleWith(<%= entity.api.strings.dispatcherClass %>.deleteOne, handlerConfig);
   <%_ } -%>
 
   <%_ if (entity.deprecated) { -%>
