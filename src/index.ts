@@ -1,8 +1,10 @@
 import {
   Awaitable,
+  CommonResponse,
   Dispatcher,
   DispatcherContext,
   ErrorHandler,
+  isNil,
 } from "@airent/api";
 import {
   NextFunction as ExpressNextFunction,
@@ -49,12 +51,22 @@ function handleWith<CONTEXT, DATA, PARSED, RESULT, ERROR>(
         dispatcherContext.data,
         dispatcherContext.context
       );
+      respond(res, commonResponse);
       res.status(commonResponse.code).json(commonResponse.result).end();
     } catch (error) {
       const commonResponse = await errorHandler(error, dispatcherContext);
       res.status(commonResponse.code).json(commonResponse.result).end();
     }
   };
+}
+
+function respond<RESULT, ERROR>(
+  res: ExpressResponse,
+  commonResponse: CommonResponse<RESULT, ERROR>
+): void {
+  const { code, result, error } = commonResponse;
+  const json = isNil(error) ? result ?? null : { error };
+  res.status(code).json(json).end();
 }
 
 export {

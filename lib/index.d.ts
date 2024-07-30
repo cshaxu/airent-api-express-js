@@ -7,6 +7,6 @@ type HandlerConfig<CONTEXT, DATA, PARSED, RESULT, ERROR> = {
     requestParser: RequestParser<DATA>;
     errorHandler?: ErrorHandler<CONTEXT, DATA, PARSED, RESULT, ERROR>;
 };
-declare const bodyRequestParser: <DATA>(request: ExpressRequest) => DATA;
+declare const bodyRequestParser: <DATA extends object>(request: ExpressRequest) => DATA;
 declare function handleWith<CONTEXT, DATA, PARSED, RESULT, ERROR>(dispatcher: Dispatcher<CONTEXT, DATA, RESULT, ERROR>, config: HandlerConfig<CONTEXT, DATA, PARSED, RESULT, ERROR>): ExpressRequestHandler;
 export { Authenticator, bodyRequestParser, HandlerConfig, handleWith, RequestParser, };
