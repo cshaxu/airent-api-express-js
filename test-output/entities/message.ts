@@ -11,8 +11,8 @@ import {
   MessageResponse,
   SelectedMessageResponse,
   MessageModel,
-} from './generated/message-type.js';
-import { MessageEntityBase } from './generated/message-base.js';
+} from '../generated/types/message.js';
+import { MessageEntityBase } from '../generated/entities/message.js';
 
 export class MessageEntity extends MessageEntityBase {
 }

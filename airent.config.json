@@ -2,6 +2,7 @@
   "type": "module",
   "schemaPath": "test-schemas",
   "entityPath": "test-output/entities",
+  "generatedPath": "test-output/generated",
   "contextImportPath": "./test-sources/context",
   "augmentors": [
     "node_modules/@airent/api/resources/augmentor.js",
@@ -10,17 +11,17 @@
   "templates": [
     {
       "name": "node_modules/@airent/api/resources/dispatcher-template.ts.ejs",
-      "outputPath": "{entityPath}/generated/{kababEntityName}-dispatcher.ts",
+      "outputPath": "{generatedPath}/dispatchers/{kababEntityName}.ts",
       "skippable": false
     },
     {
       "name": "node_modules/@airent/api/resources/actions-template.ts.ejs",
-      "outputPath": "{entityPath}/generated/{kababEntityName}-actions.ts",
+      "outputPath": "{generatedPath}/actions/{kababEntityName}.ts",
       "skippable": false
     },
     {
       "name": "node_modules/@airent/api/resources/service-interface-template.ts.ejs",
-      "outputPath": "{entityPath}/generated/{kababEntityName}-service-interface.ts",
+      "outputPath": "{generatedPath}/services/{kababEntityName}.ts",
       "skippable": false
     },
     {
@@ -30,7 +31,7 @@
     },
     {
       "name": "node_modules/@airent/api/resources/client-template.ts.ejs",
-      "outputPath": "{api.client.clientPath}/{kababEntityName}.ts",
+      "outputPath": "{generatedPath}/clients/{kababEntityName}.ts",
       "skippable": false
     },
     {
@@ -40,7 +41,7 @@
     },
     {
       "name": "resources/handler-template.ts.ejs",
-      "outputPath": "{entityPath}/generated/{kababEntityName}-handler.ts",
+      "outputPath": "{generatedPath}/handlers/{kababEntityName}.ts",
       "skippable": false
     },
     {
@@ -55,8 +56,7 @@
       "dispatcherConfigImportPath": "./test-sources/framework"
     },
     "client": {
-      "clientPath": "test-output/clients",
-      "baseUrlImport": "import { baseUrl } from '../../test-sources/config';"
+      "baseUrlImportPath": "./test-sources/config"
     }
   },
   "apiExpress": {

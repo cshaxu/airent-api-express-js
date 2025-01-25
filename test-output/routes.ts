@@ -2,7 +2,7 @@
 import { Router } from 'express';
 
 // entity imports
-import UserHandler from './entities/generated/user-handler.js';
+import UserHandler from './generated/handlers/user.js';
 
 const router = Router();
 
