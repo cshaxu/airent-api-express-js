@@ -5,7 +5,7 @@ import { bodyRequestParser, handleWith } from '../../../src/index.js';
 import { handlerConfig as handlerConfigRaw } from '../../../test-sources/framework.js';
 
 // entity imports
-import UserDispatcher from './user-dispatcher.js';
+import UserDispatcher from '../dispatchers/user.js';
 
 const handlerConfig = { ...handlerConfigRaw, requestParser: bodyRequestParser };
 

@@ -9,9 +9,9 @@ import {
   MessageFieldRequest,
   ManyMessagesResponse,
   OneMessageResponse,
-} from './message-type.js';
-import { MessageEntity } from '../message.js';
-import { MessageModel } from './message-type.js';
+} from '../types/message.js';
+import { MessageEntity } from '../../entities/message.js';
+import { MessageModel } from '../types/message.js';
 
 // api response builders
 

@@ -17,13 +17,13 @@ import {
 import { Context } from '../../../test-sources/context.js';
 
 // entity imports
-import { MessageEntity } from '../message.js';
+import { MessageEntity } from '../../entities/message.js';
 import {
   UserFieldRequest,
   UserResponse,
   SelectedUserResponse,
   UserModel,
-} from './user-type.js';
+} from '../types/user.js';
 
 /** @deprecated */
 export class UserEntityBase extends BaseEntity<

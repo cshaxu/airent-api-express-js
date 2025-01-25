@@ -9,9 +9,9 @@ import {
   UserFieldRequest,
   ManyUsersResponse,
   OneUserResponse,
-} from './user-type.js';
-import { UserEntity } from '../user.js';
-import { UserModel } from './user-type.js';
+} from '../types/user.js';
+import { UserEntity } from '../../entities/user.js';
+import { UserModel } from '../types/user.js';
 import {
   SearchUsersQuery,
   GetManyUsersQuery,

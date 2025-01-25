@@ -2,7 +2,7 @@
 import { fetchJsonOrThrow } from '@airent/api';
 
 // config imports
-import { baseUrl } from '../../test-sources/config';
+import { baseUrl } from '../../../test-sources/config.js';
 
 // entity imports
 import {
@@ -10,7 +10,7 @@ import {
   UserFieldRequest,
   ManyUsersResponse,
   OneUserResponse,
-} from '../entities/generated/user-type.js';
+} from '../types/user.js';
 import MessageApiClient from './message.js';
 import {
   SearchUsersQuery,
@@ -18,7 +18,7 @@ import {
   GetOneUserParams,
   CreateOneUserBody,
   UpdateOneUserBody,
-} from '../../test-sources/user-type.js';
+} from '../../../test-sources/user-type.js';
 
 function present<S extends UserFieldRequest>(
   one: any,

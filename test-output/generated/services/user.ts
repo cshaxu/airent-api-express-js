@@ -5,10 +5,10 @@ import { Awaitable } from '@airent/api';
 import { Context } from '../../../test-sources/context.js';
 
 // entity imports
-import { UserEntity } from '../user.js';
+import { UserEntity } from '../../entities/user.js';
 import {
   UserModel,
-} from './user-type.js';
+} from '../types/user.js';
 import {
   SearchUsersQuery,
   GetManyUsersQuery,

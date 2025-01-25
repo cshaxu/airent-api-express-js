@@ -32,6 +32,7 @@ async function getShouldEnable(name) {
  *  @property {?string} libImportPath
  *  @property {string} schemaPath
  *  @property {string} entityPath
+ *  @property {string} generatedPath
  *  @property {?string[]} [augmentors]
  *  @property {?Template[]} [templates]
  *  @property {?ApiExpressConfig} apiExpress
@@ -51,7 +52,7 @@ const API_EXPRESS_ROUTES_TEMPLATE_CONFIG = {
 };
 const API_EXPRESS_HANDLER_TEMPLATE_CONFIG = {
   name: `${AIRENT_API_EXPRESS_RESOURCES_PATH}/handler-template.ts.ejs`,
-  outputPath: `{entityPath}/generated/{kababEntityName}-handler.ts`,
+  outputPath: `{generatedPath}/handlers/{kababEntityName}.ts`,
   skippable: false,
 };
 

@@ -2,7 +2,7 @@
 import { fetchJsonOrThrow } from '@airent/api';
 
 // config imports
-import { baseUrl } from '../../test-sources/config';
+import { baseUrl } from '../../../test-sources/config.js';
 
 // entity imports
 import {
@@ -10,7 +10,7 @@ import {
   MessageFieldRequest,
   ManyMessagesResponse,
   OneMessageResponse,
-} from '../entities/generated/message-type.js';
+} from '../types/message.js';
 
 function present<S extends MessageFieldRequest>(
   one: any,
