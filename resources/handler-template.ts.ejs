@@ -41,7 +41,7 @@ const deleteOne = handleWith(<%= entity._strings.api.dispatcherClass %>.deleteOn
   <%_ if (entity.deprecated) { -%>
 /** @deprecated */
   <%_ } -%>
-const <%= `${utils.toTitleCase(entity.name)}Handler` %> = {
+const <%= `${utils.toPascalCase(entity.name)}Handler` %> = {
   <%_ if (entity._booleans.api.hasSearch) { -%>
   search,
   <%_ } -%>
@@ -65,5 +65,5 @@ const <%= `${utils.toTitleCase(entity.name)}Handler` %> = {
   <%_ } -%>
 };
 
-export default <%= `${utils.toTitleCase(entity.name)}Handler` %>;
+export default <%= `${utils.toPascalCase(entity.name)}Handler` %>;
 <% } -%>

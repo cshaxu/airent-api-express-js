@@ -1,5 +1,5 @@
 // airent imports
-import { fetchJsonOrThrow } from '@airent/api';
+import { buildJsonRequestInit, fetchJsonOrThrow } from '@airent/api';
 
 // config imports
 import { baseUrl } from '../../../test-sources/config.js';
