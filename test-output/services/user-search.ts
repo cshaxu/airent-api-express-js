@@ -6,7 +6,7 @@ import { Context } from '../../test-sources/context.js';
 
 // entity imports
 import { UserEntity } from '../entities/user.js';
-import { SearchUsersQuery } from '../../test-sources/user-type.js';
+import { SearchUsersQuery } from '../api-types/user.js';
 
 /** @deprecated */
 export type UserSearchDocument = {
