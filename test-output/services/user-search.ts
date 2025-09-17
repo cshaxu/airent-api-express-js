@@ -1,5 +1,6 @@
 // airent imports
-import { Awaitable, SearchEngineBase, SearchServiceBase } from '@airent/api';
+import { Awaitable } from "airent";
+import { SearchEngineBase, SearchServiceBase } from '@airent/api';
 
 // config imports
 import { Context } from '../../test-sources/context.js';

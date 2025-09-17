@@ -1,11 +1,11 @@
 import {
-  Awaitable,
   CommonResponse,
   Dispatcher,
   DispatcherContext,
   ErrorHandler,
   isNil,
 } from "@airent/api";
+import { Awaitable } from "airent";
 import {
   NextFunction as ExpressNextFunction,
   Request as ExpressRequest,

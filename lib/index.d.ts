@@ -1,4 +1,5 @@
-import { Awaitable, Dispatcher, ErrorHandler } from "@airent/api";
+import { Dispatcher, ErrorHandler } from "@airent/api";
+import { Awaitable } from "airent";
 import { Request as ExpressRequest, RequestHandler as ExpressRequestHandler } from "express";
 type Authenticator<CONTEXT> = (request: ExpressRequest) => Awaitable<CONTEXT>;
 type RequestParser<DATA> = (request: ExpressRequest) => Awaitable<DATA>;

@@ -1,5 +1,5 @@
 // airent imports
-import { Awaitable } from '@airent/api';
+import { Awaitable } from 'airent';
 
 // config imports
 import { Context } from '../../../test-sources/context.js';
