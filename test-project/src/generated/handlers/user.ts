@@ -1,8 +1,8 @@
 // airent imports
-import { bodyRequestParser, handleWith } from '../../../src/index.js';
+import { bodyRequestParser, handleWith } from '../../../../src/index.js';
 
 // config imports
-import { handlerConfig as handlerConfigRaw } from '../../../test-sources/framework.js';
+import { handlerConfig as handlerConfigRaw } from '../../framework.js';
 
 // entity imports
 import UserDispatcher from '../dispatchers/user.js';

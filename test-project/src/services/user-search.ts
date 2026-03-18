@@ -3,10 +3,10 @@ import { Awaitable } from "airent";
 import { SearchEngineBase, SearchServiceBase } from '@airent/api';
 
 // config imports
-import { Context } from '../../test-sources/context.js';
+import { Context } from '../context.js';
 
 // entity imports
-import { UserEntity } from '../entities/user.js';
+import { UserEntity } from '../../test-output/entities/user.js';
 import { SearchUsersQuery } from '../api-types/user.js';
 
 /** @deprecated */

@@ -2,7 +2,7 @@
 import { buildJsonRequestInit, fetchJsonOrThrow } from '@airent/api';
 
 // config imports
-import { baseUrl } from '../../../test-sources/config.js';
+import { baseUrl } from '../../config.js';
 
 // entity imports
 import {

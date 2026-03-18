@@ -1,9 +1,9 @@
 {
   "type": "module",
-  "schemaPath": "test-schemas",
-  "entityPath": "test-output/entities",
-  "generatedPath": "test-output/generated",
-  "contextImportPath": "./test-sources/context",
+  "schemaPath": "test-project/schemas",
+  "entityPath": "test-project/src/entities",
+  "generatedPath": "test-project/src/generated",
+  "contextImportPath": "./test-project/src/context",
   "augmentors": [
     "node_modules/@airent/api/resources/augmentor.js",
     "resources/augmentor.js"
@@ -56,18 +56,18 @@
     }
   ],
   "api": {
-    "typesPath": "test-output/api-types",
+    "typesPath": "test-project/src/api-types",
     "server": {
-      "servicePath": "test-output/services",
-      "dispatcherConfigImportPath": "./test-sources/framework"
+      "servicePath": "test-project/src/services",
+      "dispatcherConfigImportPath": "./test-project/src/framework"
     },
     "client": {
-      "baseUrlImportPath": "./test-sources/config"
+      "baseUrlImportPath": "./test-project/src/config"
     }
   },
   "apiExpress": {
     "libImportPath": "./src/index",
-    "handlerConfigImportPath": "./test-sources/framework",
-    "routesFilePath": "test-output/routes.ts"
+    "handlerConfigImportPath": "./test-project/src/framework",
+    "routesFilePath": "test-project/src/routes.ts"
   }
 }

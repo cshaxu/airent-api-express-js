@@ -13,7 +13,7 @@ import {
 } from 'airent';
 
 // config imports
-import { Context } from '../../test-sources/context.js';
+import { Context } from '../../src/context.js';
 
 // entity imports
 import { MessageEntity } from './message.js';

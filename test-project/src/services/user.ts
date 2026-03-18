@@ -2,13 +2,13 @@
 import createHttpError from 'http-errors';
 
 // config imports
-import { Context } from '../../test-sources/context.js';
+import { Context } from '../context.js';
 
 // entity imports
-import { UserEntity } from '../entities/user.js';
+import { UserEntity } from '../../test-output/entities/user.js';
 import {
   UserModel,
-} from '../generated/types/user.js';
+} from '../../test-output/generated/types/user.js';
 import {
   SearchUsersQuery,
   GetManyUsersQuery,
@@ -16,7 +16,7 @@ import {
   CreateOneUserBody,
   UpdateOneUserBody,
 } from '../api-types/user.js';
-import { UserServiceInterface } from '../generated/services/user.js';
+import { UserServiceInterface } from '../../test-output/generated/services/user.js';
 import { UserSearchService } from './user-search.js';
 
 async function search(query: SearchUsersQuery, context: Context): Promise<UserEntity[]> {

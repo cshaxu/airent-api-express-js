@@ -15,7 +15,7 @@ import {
 } from 'airent';
 
 // config imports
-import { Context } from '../../../test-sources/context.js';
+import { Context } from '../../context.js';
 
 // entity imports
 import {

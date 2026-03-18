@@ -2,7 +2,7 @@
 import { isFunction, max, min } from '@airent/api';
 
 // config imports
-import { Context } from '../../../test-sources/context.js';
+import { Context } from '../../context.js';
 
 // entity imports
 import {
