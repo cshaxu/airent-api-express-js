@@ -2,24 +2,16 @@
 
 const fs = require("fs");
 const path = require("path");
-const readline = require("readline");
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-// Function to ask a question and store the answer in the config object
-function askQuestion(question, defaultAnswer) {
-  return new Promise((resolve) =>
-    rl.question(`${question} (${defaultAnswer}): `, resolve)
-  ).then((a) => (a?.length ? a : defaultAnswer));
-}
-
-async function getShouldEnable(name) {
-  const shouldEnable = await askQuestion(`Enable "${name}"`, "yes");
-  return shouldEnable === "yes";
-}
+const configUtils = require("airent/resources/utils/configurator.js");
+const {
+  addTemplate,
+  createPrompt,
+  getShouldEnable,
+  loadJsonConfig,
+  normalizeConfigCollections,
+  writeJsonConfig,
+} = configUtils;
 
 /** @typedef {Object} ApiExpressConfig
  *  @property {?string} libImportPath
@@ -62,64 +54,52 @@ const API_EXPRESS_TEMPLATE_CONFIGS = [
 ];
 
 async function loadConfig() {
-  const configContent = await fs.promises.readFile(CONFIG_FILE_PATH, "utf8");
-  const config = JSON.parse(configContent);
-  const augmentors = config.augmentors ?? [];
-  const templates = config.templates ?? [];
-  return { ...config, augmentors, templates };
-}
-
-function addTemplate(config, draftTemplate) {
-  const { templates } = config;
-  const template = templates.find((t) => t.name === draftTemplate.name);
-  if (template === undefined) {
-    templates.push(draftTemplate);
-  }
+  return normalizeConfigCollections(await loadJsonConfig(CONFIG_FILE_PATH));
 }
 
 async function configure() {
-  const config = await loadConfig();
-  const { augmentors } = config;
-  const isAugmentorEnabled = augmentors.includes(API_EXPRESS_AUGMENTOR_PATH);
-  const shouldEnableApiExpress = isAugmentorEnabled
-    ? true
-    : await getShouldEnable("Api Express");
-  if (!shouldEnableApiExpress) {
-    return;
+  const prompt = createPrompt();
+  const { askQuestion } = prompt;
+
+  try {
+    const config = await loadConfig();
+    const { augmentors } = config;
+    const isAugmentorEnabled = augmentors.includes(API_EXPRESS_AUGMENTOR_PATH);
+    const shouldEnableApiExpress = isAugmentorEnabled
+      ? true
+      : await getShouldEnable(askQuestion, "Api Express");
+    if (!shouldEnableApiExpress) {
+      return;
+    }
+    if (!isAugmentorEnabled) {
+      augmentors.push(API_EXPRESS_AUGMENTOR_PATH);
+    }
+    API_EXPRESS_TEMPLATE_CONFIGS.forEach((t) => addTemplate(config, t));
+
+    config.apiExpress = config.apiExpress ?? {};
+
+    config.apiExpress.routesFilePath = await askQuestion(
+      "Express Api Routes Output File Path",
+      config.apiExpress.routesFilePath ?? "./src/routes.ts"
+    );
+
+    config.apiExpress.handlerConfigImportPath = await askQuestion(
+      'Import path for "handlerConfig"',
+      config.apiExpress.handlerConfigImportPath ?? "./src/framework"
+    );
+
+    await writeJsonConfig(CONFIG_FILE_PATH, config);
+    console.log(`[AIRENT-API-EXPRESS/INFO] Package configured.`);
+  } finally {
+    prompt.close();
   }
-  if (!isAugmentorEnabled) {
-    augmentors.push(API_EXPRESS_AUGMENTOR_PATH);
-  }
-  API_EXPRESS_TEMPLATE_CONFIGS.forEach((t) => addTemplate(config, t));
-
-  config.apiExpress = config.apiExpress ?? {};
-
-  config.apiExpress.routesFilePath = await askQuestion(
-    "Express Api Routes Output File Path",
-    config.apiExpress.routesFilePath ?? "./src/routes.ts"
-  );
-
-  config.apiExpress.handlerConfigImportPath = await askQuestion(
-    'Import path for "handlerConfig"',
-    config.apiExpress.handlerConfigImportPath ?? "./src/framework"
-  );
-
-  const content = JSON.stringify(config, null, 2) + "\n";
-  await fs.promises.writeFile(CONFIG_FILE_PATH, content);
-  console.log(`[AIRENT-API-EXPRESS/INFO] Package configured.`);
 }
 
 async function main() {
-  try {
-    if (!fs.existsSync(CONFIG_FILE_PATH)) {
-      throw new Error(
-        '[AIRENT-API-EXPRESS/ERROR] "airent.config.json" not found'
-      );
-    }
-    await configure();
-  } finally {
-    rl.close();
+  if (!fs.existsSync(CONFIG_FILE_PATH)) {
+    throw new Error('[AIRENT-API-EXPRESS/ERROR] "airent.config.json" not found');
   }
+  await configure();
 }
 
 main().catch(console.error);
